@@ -19,8 +19,9 @@ const SolidCompareImage: Component<IProps> = ({
     sliderLineColor = '#ffffff',
     sliderLineWidth = 2,
     sliderPositionPercentage = 0.5,
-    horizontal = true,
+    vertical = false,
   }) => {
+    const horizontal = !vertical
 
   const [sliderPosition, setSliderPosition] = createSignal<number>(
     sliderPositionPercentage,
@@ -94,8 +95,8 @@ const SolidCompareImage: Component<IProps> = ({
       ? cursorXfromWindow - imagePosition.left
       : cursorYfromWindow - imagePosition.top;
 
-    // Set minimum and maximum values to prevent the slider from overflowing
     const sliderLineWidthMetade= sliderLineWidth / 2;
+      // Set minimum and maximum values to prevent the slider from overflowing
     const minPos = 0 + sliderLineWidthMetade
     const maxPos = horizontal
       ? containerWidth() - sliderLineWidthMetade
@@ -185,9 +186,17 @@ const SolidCompareImage: Component<IProps> = ({
   });
 
   const styles = createMemo(()=>{
-    const response:{[key:string]:any} =   {
+    let cursor = "auto"
+    if(!hover){
+      if(horizontal){
+        cursor="ew-resize"
+      }else{
+        cursor = "ns-resize"
+      }
+    }
+    const response:{[key:string]:JSX.CSSProperties} =   {
         container: {
-          boxSizing: 'border-box',
+          "box-sizing": 'border-box',
           position: 'relative',
           width: '100%',
           height: `${containerHeight()}px`,
@@ -199,7 +208,7 @@ const SolidCompareImage: Component<IProps> = ({
             : `rect(${containerHeight() * sliderPosition()}px, auto, auto, auto)`,
           display: 'block',
           height: '100%',
-          objectFit: 'cover',
+          "object-fit": 'cover',
           position: 'absolute',
           width: '100%',
           ...rightImageCss,
@@ -210,20 +219,18 @@ const SolidCompareImage: Component<IProps> = ({
             : `rect(auto, auto, ${containerHeight() * sliderPosition()}px, auto)`,
           display: 'block',
           height: '100%',
-          objectFit: 'cover',
+          "object-fit": 'cover',
           position: 'absolute',
           width: '100%',
           ...leftImageCss,
         },
         slider: {
-          alignItems: 'center',
-          cursor:
-            (!hover && horizontal && 'ew-resize') ||
-            (!hover && !horizontal && 'ns-resize'),
+          "align-items": 'center',
+          cursor,
           display: 'flex',
-          flexDirection: horizontal ? 'column' : 'row',
+          "flex-direction": horizontal ? 'column' : 'row',
           height: horizontal ? '100%' : `${handleSize}px`,
-          justifyContent: 'center',
+          "justify-content": 'center',
           left: horizontal
             ? `${containerWidth() * sliderPosition() - handleSize / 2}px`
             : 0,
@@ -235,48 +242,48 @@ const SolidCompareImage: Component<IProps> = ({
         },
         line: {
           background: sliderLineColor,
-          boxShadow:
+          "box-shadow":
             '0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12)',
           flex: '0 1 auto',
           height: horizontal ? '100%' : `${sliderLineWidth}px`,
           width: horizontal ? `${sliderLineWidth}px` : '100%',
         },
         handleCustom: {
-          alignItems: 'center',
-          boxSizing: 'border-box',
+          "align-items": 'center',
+          "box-sizing": 'border-box',
           display: 'flex',
           flex: '1 0 auto',
           height: 'auto',
-          justifyContent: 'center',
+          "justify-content": 'center',
           width: 'auto',
         },
         handleDefault: {
-          alignItems: 'center',
+          "align-items": 'center',
           border: `${sliderLineWidth}px solid ${sliderLineColor}`,
-          borderRadius: '100%',
-          boxShadow:
+          "border-radius": '100%',
+          "box-shadow":
             '0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12)',
-          boxSizing: 'border-box',
+          "box-sizing": 'border-box',
           display: 'flex',
           flex: '1 0 auto',
           height: `${handleSize}px`,
-          justifyContent: 'center',
+          "justify-content": 'center',
           width: `${handleSize}px`,
           transform: horizontal ? 'none' : 'rotate(90deg)',
         },
         leftArrow: {
           border: `inset ${handleSize * 0.15}px rgba(0,0,0,0)`,
-          borderRight: `${handleSize * 0.15}px solid ${sliderLineColor}`,
+          "border-right": `${handleSize * 0.15}px solid ${sliderLineColor}`,
           height: '0px',
-          marginLeft: `-${handleSize * 0.25}px`, // for IE11
-          marginRight: `${handleSize * 0.25}px`,
+          "margin-left": `-${handleSize * 0.25}px`, // for IE11
+          "margin-right": `${handleSize * 0.25}px`,
           width: '0px',
         },
         rightArrow: {
           border: `inset ${handleSize * 0.15}px rgba(0,0,0,0)`,
-          borderLeft: `${handleSize * 0.15}px solid ${sliderLineColor}`,
+          "border-left": `${handleSize * 0.15}px solid ${sliderLineColor}`,
           height: '0px',
-          marginRight: `-${handleSize * 0.25}px`, // for IE11
+          "margin-right": `-${handleSize * 0.25}px`, // for IE11
           width: '0px',
         },
         leftLabel: {
@@ -296,10 +303,10 @@ const SolidCompareImage: Component<IProps> = ({
           opacity: isSliding() ? 0 : 1,
           padding: '10px 20px',
           position: 'absolute',
-          left: horizontal ? null : '50%',
-          right: horizontal ? '5%' : null,
-          top: horizontal ? '50%' : null,
-          bottom: horizontal ? null : '3%',
+          left: horizontal ? undefined : '50%',
+          right: horizontal ? '5%' : undefined,
+          top: horizontal ? '50%' : undefined,
+          bottom: horizontal ? undefined : '3%',
           transform: horizontal ? 'translate(0,-50%)' : 'translate(-50%, 0)',
           transition: 'opacity 0.1s ease-out',
         },

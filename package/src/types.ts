@@ -18,6 +18,6 @@ export interface IProps {
     sliderLineColor?: string;
     sliderLineWidth?: number;
     sliderPositionPercentage?: number;
-    horizontal?: boolean;
+    vertical?: boolean;
   }
   
