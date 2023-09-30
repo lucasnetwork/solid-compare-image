@@ -179,7 +179,6 @@ const SolidCompareImage: Component<IProps> = ({
           : Math.min(leftImageWidthHeightRatio, rightImageWidthHeightRatio);
 
       const idealContainerHeight = containerWidth() * idealWidthHeightRatio;
-      console.log(idealContainerHeight);
       setContainerHeight(idealContainerHeight);
     }
 
