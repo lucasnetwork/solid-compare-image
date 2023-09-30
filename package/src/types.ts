@@ -7,12 +7,12 @@ export interface IProps {
   hover?: boolean;
   leftImage: string;
   leftImageAlt?: string;
-  leftImageCss?: object;
+  leftImageCss?: JSX.CSSProperties;
   leftImageLabel?: string;
   onSliderPositionChange?: (position: number) => void;
   rightImage: string;
   rightImageAlt?: string;
-  rightImageCss?: object;
+  rightImageCss?: JSX.CSSProperties;
   rightImageLabel?: string;
   skeleton?: JSX.Element;
   sliderLineColor?: string;
