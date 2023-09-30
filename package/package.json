@@ -3,11 +3,18 @@
   "version": "0.1.0",
   "description": "",
   "scripts": {
-    "start": "vite",
-    "dev": "vite",
-    "build": "vite build",
-    "serve": "vite preview"
+    "prepare": "npm run build",
+    "build": "tsc",
+    "prepublish": "rm -rf ./dist && npm run build"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lucasnetwork/solid-compare-image"
+  },
+  "keywords": ["solid js","image","compare image"],
+  "prepare": "npm run build",
+  "main": "./dist/source/index.jsx",
+  "types": "./dist/types/index.d.ts",
   "license": "MIT",
   "peerDependencies": {
     "solid-js": "^1.7.6"
