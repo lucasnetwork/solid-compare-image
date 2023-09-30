@@ -107,12 +107,12 @@ const SolidCompareImage: Component<IProps> = ({
       ? cursorXfromWindow - imagePosition.left
       : cursorYfromWindow - imagePosition.top;
 
-    const sliderLineWidthMetade = sliderLineWidth / 2;
+    const halfSliderLineWidth = sliderLineWidth / 2;
     // Set minimum and maximum values to prevent the slider from overflowing
-    const minPos = 0 + sliderLineWidthMetade;
+    const minPos = 0 + halfSliderLineWidth;
     const maxPos = horizontal
-      ? containerWidth() - sliderLineWidthMetade
-      : containerHeight() - sliderLineWidthMetade;
+      ? containerWidth() - halfSliderLineWidth
+      : containerHeight() - halfSliderLineWidth;
 
     if (pos < minPos) pos = minPos;
     if (pos > maxPos) pos = maxPos;
