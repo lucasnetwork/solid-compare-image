@@ -41,23 +41,23 @@ export default App;
 
 | Name | Values/Type | Required | Default | Description |
 | ---- | ----------- | -------- | ------- | ----------- |
-| `aspectRatio` | `"taller" \| "wider"` | **No** | `"taller"` | description |
+| `aspectRatio` | `"taller" \| "wider"` | **No** | `"taller"` | Which to choose if the aspect ratios of the images are different |
 | `handle` | `Element` | No | `-` | Custom element |
-| `handleSize` | `number` | No | `40` | diameter of handle  |
-| `hover` | `boolean` | No | `40` | diameter of handle  |
-| `leftImage` | `string` | Yes | `false` | 	Whether to slide at hover |
-| `leftImageAlt` | `string` | No | `-` | alt props for left image |
-| `leftImageCss` | `object` | No | `-` | custom css for left image |
+| `handleSize` | `number` | No | `40` | Diameter of handle  |
+| `hover` | `boolean` | No | `40` | Whether to slide at hover |
+| `leftImage` | `string` | Yes | `false` | 	Left image's url |
+| `leftImageAlt` | `string` | No | `-` | Alt props for left image |
+| `leftImageCss` | `object` | No | `-` | Custom css for left image |
 | `leftImageLabel` | `boolean` | No | `-` | Label for left Image |
-| `rightImage` | `string` | Yes | `-` | right image's url  |
-| `rightImageAlt` | `string` | No | `-` | alt props for right image |
-| `rightImageCss` | `object` | No | `-` | custom css for right image |
+| `rightImage` | `string` | Yes | `-` | Right image's url |
+| `rightImageAlt` | `string` | No | `-` | Alt props for right image |
+| `rightImageCss` | `object` | No | `-` | Custom css for right image |
 | `rightImageLabel` | `string` | No | `-` | Label for right Image |
 | `skeleton` | `Element` | No | `-` | Element to use like preview |
-| `sliderLineColor` | `string` | No | `"#fff"` | 	line color of slider |
-| `sliderLineWidth` | `number` | No | `2` | line width of slider (by pixel) |
+| `sliderLineColor` | `string` | No | `"#fff"` | 	Line color of slider |
+| `sliderLineWidth` | `number` | No | `2` | Line width of slider (by pixel) |
 | `sliderPositionPercentage` | `number` | No | `0.5` | Default line position (from 0 to 1) |
-| `vertical` | `boolean` | No | `false` | description |
+| `vertical` | `boolean` | No | `false` | Compare images vertically instead of horizontally. The left image is on the top and the right image is on the bottom |
 
 ### Events 
 
