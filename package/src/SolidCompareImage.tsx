@@ -18,11 +18,13 @@ const SolidCompareImage: Component<IProps> = ({
   leftImageAlt = "",
   leftImageCss = {},
   leftImageLabel = null,
+  leftPositionLabel = "center",
   onSliderPositionChange = () => {},
   rightImage,
   rightImageAlt = "",
   rightImageCss = {},
   rightImageLabel = null,
+  rightPositionLabel = "center",
   skeleton = null,
   sliderLineColor = "#ffffff",
   sliderLineWidth = 2,
@@ -186,6 +188,22 @@ const SolidCompareImage: Component<IProps> = ({
         cursor = "ns-resize";
       }
     }
+    let rightPosition = "50%"
+    switch(rightPositionLabel){
+      case "bottom":
+        rightPosition = "85%"
+        break
+      case "top":
+        rightPosition = "10%"
+    }
+    let leftPosition = "50%"
+    switch(leftPositionLabel){
+      case "bottom":
+        leftPosition = "85%"
+        break
+      case "top":
+        leftPosition = "10%"
+    }
     const response: { [key: string]: JSX.CSSProperties } = {
       container: {
         "box-sizing": "border-box",
@@ -281,11 +299,11 @@ const SolidCompareImage: Component<IProps> = ({
       leftLabel: {
         background: "rgba(0, 0, 0, 0.5)",
         color: "white",
-        left: horizontal ? "5%" : "50%",
+        left: horizontal ? "5%" : leftPosition,
         opacity: isSliding() ? 0 : 1,
         padding: "10px 20px",
         position: "absolute",
-        top: horizontal ? "50%" : "3%",
+        top: horizontal ? leftPosition : "3%",
         transform: horizontal ? "translate(0,-50%)" : "translate(-50%, 0)",
         transition: "opacity 0.1s ease-out",
       },
@@ -295,9 +313,9 @@ const SolidCompareImage: Component<IProps> = ({
         opacity: isSliding() ? 0 : 1,
         padding: "10px 20px",
         position: "absolute",
-        left: horizontal ? undefined : "50%",
+        left: horizontal ? undefined : rightPosition,
         right: horizontal ? "5%" : undefined,
-        top: horizontal ? "50%" : undefined,
+        top: horizontal ? rightPosition : undefined,
         bottom: horizontal ? undefined : "3%",
         transform: horizontal ? "translate(0,-50%)" : "translate(-50%, 0)",
         transition: "opacity 0.1s ease-out",
