@@ -33,6 +33,9 @@ export interface IProps {
    * Label for left Image 
    */
   leftImageLabel?: string;
+  /**
+   * Position for left label
+   */
   leftPositionLabel?:"top" | "center" | "bottom"
   /**
      * Callback function called each time the slider changes.
@@ -55,6 +58,9 @@ export interface IProps {
    * Label for right Image
    */
   rightImageLabel?: string;
+  /**
+   * Position for right label
+   */
   rightPositionLabel?:"top" | "center" | "bottom"
   /**
    * Element to use like preview

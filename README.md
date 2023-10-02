@@ -49,10 +49,12 @@ export default App;
 | `leftImageAlt` | `string` | No | `-` | Alt props for left image |
 | `leftImageCss` | `object` | No | `-` | Custom css for left image |
 | `leftImageLabel` | `boolean` | No | `-` | Label for left Image |
+| `leftPositionLabel` | `"top" \| "center" \| "bottom"` | No | `center` | Position for left label |
 | `rightImage` | `string` | Yes | `-` | Right image's url |
 | `rightImageAlt` | `string` | No | `-` | Alt props for right image |
 | `rightImageCss` | `object` | No | `-` | Custom css for right image |
 | `rightImageLabel` | `string` | No | `-` | Label for right Image |
+| `rightPositionLabel` | `"top" \| "center" \| "bottom"` | No | `center` | Position for right label |
 | `skeleton` | `Element` | No | `-` | Element to use like preview |
 | `sliderLineColor` | `string` | No | `"#fff"` | 	Line color of slider |
 | `sliderLineWidth` | `number` | No | `2` | Line width of slider (by pixel) |
