@@ -42,26 +42,25 @@ export default App;
 | Name | Values/Type | Required | Default | Description |
 | ---- | ----------- | -------- | ------- | ----------- |
 | `aspectRatio` | `"taller" \| "wider"` | **No** | `"taller"` | description |
-| `handle` | `Component` | No | `-` |description |
-| `handleSize` | `number` | No | `40` | description |
-| `leftImage` | `string` | Yes | `-` | description |
-| `leftImageAlt` | `string` | No | `-` | description |
-| `leftImageCss` | `object` | No | `-` | description |
-| `leftImageLabel` | `boolean` | No | `-` | description |
-| `rightImage` | `string` | Yes | `-` | description |
-| `rightImageAlt` | `string` | No | `-` | description |
-| `rightImageCss` | `object` | No | `-` | description |
-| `rightImageLabel` | `string` | No | `-` | description |
-| `skeleton` | `JSX.Element` | No | `-` | description |
-| `sliderLineColor` | `string` | No | `-` | description |
-| `rightImageCss` | `object` | No | `-` | description |
-| `sliderLineColor` | `string` | No | `"#fff"` | description |
-| `sliderLineWidth` | `number` | No | `2` | description |
-| `sliderPositionPercentage` | `number` | No | `0.5` | description |
+| `handle` | `Element` | No | `-` | Custom element |
+| `handleSize` | `number` | No | `40` | diameter of handle  |
+| `hover` | `boolean` | No | `40` | diameter of handle  |
+| `leftImage` | `string` | Yes | `false` | 	Whether to slide at hover |
+| `leftImageAlt` | `string` | No | `-` | alt props for left image |
+| `leftImageCss` | `object` | No | `-` | custom css for left image |
+| `leftImageLabel` | `boolean` | No | `-` | Label for left Image |
+| `rightImage` | `string` | Yes | `-` | right image's url  |
+| `rightImageAlt` | `string` | No | `-` | alt props for right image |
+| `rightImageCss` | `object` | No | `-` | custom css for right image |
+| `rightImageLabel` | `string` | No | `-` | Label for right Image |
+| `skeleton` | `Element` | No | `-` | Element to use like preview |
+| `sliderLineColor` | `string` | No | `"#fff"` | 	line color of slider |
+| `sliderLineWidth` | `number` | No | `2` | line width of slider (by pixel) |
+| `sliderPositionPercentage` | `number` | No | `0.5` | Default line position (from 0 to 1) |
 | `vertical` | `boolean` | No | `false` | description |
 
 ### Events 
 
 | Name | Params |  Description |
 | ---- | ----------- | -------- |
-| `onSliderPositionChange` | `position:number`| Description |
+| `onSliderPositionChange` | `position:number`| Callback function called each time the slider changes. The position (0 to 1) of the slider is passed as arg |
