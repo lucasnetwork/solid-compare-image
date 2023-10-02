@@ -44,7 +44,6 @@ const SolidCompareImage: Component<IProps> = ({
   let rightImageRef: HTMLImageElement | undefined;
   let leftImageRef: HTMLImageElement | undefined;
 
-  // make the component responsive
   onMount(() => {
     if (!containerRef) {
       return;
@@ -56,24 +55,6 @@ const SolidCompareImage: Component<IProps> = ({
     resizeObserver.observe(containerRef);
 
     return () => resizeObserver.disconnect();
-  });
-
-  onMount(() => {
-    // consider the case where loading image is completed immediately
-    // due to the cache etc.
-    const alreadyDone = leftImageRef?.complete;
-    alreadyDone && setLeftImgLoaded(true);
-  });
-  onCleanup(() => {
-    setLeftImgLoaded(false);
-    setRightImgLoaded(false);
-  });
-
-  onMount(() => {
-    // consider the case where loading image is completed immediately
-    // due to the cache etc.
-    const alreadyDone = rightImageRef?.complete;
-    alreadyDone && setRightImgLoaded(true);
   });
 
   const handleSliding = (event: TouchEvent | MouseEvent) => {
@@ -182,9 +163,7 @@ const SolidCompareImage: Component<IProps> = ({
       setContainerHeight(idealContainerHeight);
     }
 
-    return () => {
-      // cleanup all event resteners
-
+    onCleanup(()=>{
       if (containerRef) {
         containerRef.removeEventListener("touchstart", startSliding); // 01
         containerRef.removeEventListener("mousemove", handleSliding); // 03
@@ -195,7 +174,7 @@ const SolidCompareImage: Component<IProps> = ({
       window.removeEventListener("mouseup", finishSliding); // 06
       window.removeEventListener("mousemove", handleSliding); // 07
       window.removeEventListener("touchmove", handleSliding); // 08
-    };
+    })
   });
 
   const styles = createMemo(() => {
@@ -345,8 +324,8 @@ const SolidCompareImage: Component<IProps> = ({
 
   return (
     <>
-      {skeleton && rightImgLoaded() && leftImgLoaded() && (
-        <div style={{ ...styles().container }}>{skeleton}</div>
+      {skeleton && (!rightImgLoaded() || !leftImgLoaded() )&& (
+        <div style={{ ...styles().container,height:"initial" }}>{skeleton}</div>
       )}
 
       <div
