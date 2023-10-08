@@ -6,35 +6,35 @@ import {
   onCleanup,
   createMemo,
   JSX,
+  mergeProps,
 } from "solid-js";
 import { IProps } from "./types";
 
-const SolidCompareImage: Component<IProps> = ({
-  aspectRatio = "taller",
-  handle = null,
-  handleSize = 40,
-  hover = false,
-  leftImage,
-  leftImageAlt = "",
-  leftImageCss = {},
-  leftImageLabel = null,
-  leftPositionLabel = "center",
-  onSliderPositionChange = () => {},
-  rightImage,
-  rightImageAlt = "",
-  rightImageCss = {},
-  rightImageLabel = null,
-  rightPositionLabel = "center",
-  skeleton = null,
-  sliderLineColor = "#ffffff",
-  sliderLineWidth = 2,
-  sliderPositionPercentage = 0.5,
-  vertical = false,
-}) => {
-  const horizontal = !vertical;
+const SolidCompareImage: Component<IProps> = (props) => {
+  const merged = mergeProps({
+    aspectRatio: "taller",
+    handle: null,
+    handleSize: 40,
+    hover: false,
+    leftImageAlt: "",
+    leftImageCss: {},
+    leftImageLabel: null,
+    leftPositionLabel: "center",
+    onSliderPositionChange: () => {},
+    rightImageAlt: "",
+    rightImageCss: {},
+    rightImageLabel: null,
+    rightPositionLabel: "center",
+    skeleton: null,
+    sliderLineColor: "#ffffff",
+    sliderLineWidth: 2,
+    sliderPositionPercentage: 0.5,
+    vertical: false,
+  }, props);
+  const horizontal = !merged.vertical;
 
   const [sliderPosition, setSliderPosition] = createSignal<number>(
-    sliderPositionPercentage
+    merged.sliderPositionPercentage
   );
   const [containerWidth, setContainerWidth] = createSignal<number>(0);
   const [containerHeight, setContainerHeight] = createSignal<number>(0);
@@ -90,7 +90,7 @@ const SolidCompareImage: Component<IProps> = ({
       ? cursorXfromWindow - imagePosition.left
       : cursorYfromWindow - imagePosition.top;
 
-    const halfSliderLineWidth = sliderLineWidth / 2;
+    const halfSliderLineWidth = merged.sliderLineWidth / 2;
     // Set minimum and maximum values to prevent the slider from overflowing
     const minPos = 0 + halfSliderLineWidth;
     const maxPos = horizontal
@@ -103,7 +103,7 @@ const SolidCompareImage: Component<IProps> = ({
       ? pos / containerWidth()
       : pos / containerHeight();
     setSliderPosition(position);
-    onSliderPositionChange(position);
+    merged.onSliderPositionChange(position);
   };
 
   createEffect(() => {
@@ -142,7 +142,7 @@ const SolidCompareImage: Component<IProps> = ({
       window.addEventListener("touchend", finishSliding); // 02
 
       // for desktop
-      if (hover) {
+      if (merged.hover) {
         containerRef.addEventListener("mousemove", handleSliding); // 03
         containerRef.addEventListener("mouseleave", finishSliding); // 04
       } else {
@@ -157,7 +157,7 @@ const SolidCompareImage: Component<IProps> = ({
         rightImageRef.naturalHeight / rightImageRef.naturalWidth;
 
       const idealWidthHeightRatio =
-        aspectRatio === "taller"
+      merged.aspectRatio === "taller"
           ? Math.max(leftImageWidthHeightRatio, rightImageWidthHeightRatio)
           : Math.min(leftImageWidthHeightRatio, rightImageWidthHeightRatio);
 
@@ -181,7 +181,7 @@ const SolidCompareImage: Component<IProps> = ({
 
   const styles = createMemo(() => {
     let cursor = "auto";
-    if (!hover) {
+    if (!merged.hover) {
       if (horizontal) {
         cursor = "ew-resize";
       } else {
@@ -189,7 +189,7 @@ const SolidCompareImage: Component<IProps> = ({
       }
     }
     let rightPosition = "50%"
-    switch(rightPositionLabel){
+    switch(merged.rightPositionLabel){
       case "bottom":
         rightPosition = "85%"
         break
@@ -197,7 +197,7 @@ const SolidCompareImage: Component<IProps> = ({
         rightPosition = "10%"
     }
     let leftPosition = "50%"
-    switch(leftPositionLabel){
+    switch(merged.leftPositionLabel){
       case "bottom":
         leftPosition = "85%"
         break
@@ -221,7 +221,7 @@ const SolidCompareImage: Component<IProps> = ({
         "object-fit": "cover",
         position: "absolute",
         width: "100%",
-        ...rightImageCss,
+        ...merged.rightImageCss,
       },
       leftImage: {
         clip: horizontal
@@ -232,31 +232,31 @@ const SolidCompareImage: Component<IProps> = ({
         "object-fit": "cover",
         position: "absolute",
         width: "100%",
-        ...leftImageCss,
+        ...merged.leftImageCss,
       },
       slider: {
         "align-items": "center",
         cursor,
         display: "flex",
         "flex-direction": horizontal ? "column" : "row",
-        height: horizontal ? "100%" : `${handleSize}px`,
+        height: horizontal ? "100%" : `${merged.handleSize}px`,
         "justify-content": "center",
         left: horizontal
-          ? `${containerWidth() * sliderPosition() - handleSize / 2}px`
+          ? `${containerWidth() * sliderPosition() - merged.handleSize / 2}px`
           : 0,
         position: "absolute",
         top: horizontal
           ? 0
-          : `${containerHeight() * sliderPosition() - handleSize / 2}px`,
-        width: horizontal ? `${handleSize}px` : "100%",
+          : `${containerHeight() * sliderPosition() - merged.handleSize / 2}px`,
+        width: horizontal ? `${merged.handleSize}px` : "100%",
       },
       line: {
-        background: sliderLineColor,
+        background: merged.sliderLineColor,
         "box-shadow":
           "0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12)",
         flex: "0 1 auto",
-        height: horizontal ? "100%" : `${sliderLineWidth}px`,
-        width: horizontal ? `${sliderLineWidth}px` : "100%",
+        height: horizontal ? "100%" : `${merged.sliderLineWidth}px`,
+        width: horizontal ? `${merged.sliderLineWidth}px` : "100%",
       },
       handleCustom: {
         "align-items": "center",
@@ -269,31 +269,31 @@ const SolidCompareImage: Component<IProps> = ({
       },
       handleDefault: {
         "align-items": "center",
-        border: `${sliderLineWidth}px solid ${sliderLineColor}`,
+        border: `${merged.sliderLineWidth}px solid ${merged.sliderLineColor}`,
         "border-radius": "100%",
         "box-shadow":
           "0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12)",
         "box-sizing": "border-box",
         display: "flex",
         flex: "1 0 auto",
-        height: `${handleSize}px`,
+        height: `${merged.handleSize}px`,
         "justify-content": "center",
-        width: `${handleSize}px`,
+        width: `${merged.handleSize}px`,
         transform: horizontal ? "none" : "rotate(90deg)",
       },
       leftArrow: {
-        border: `inset ${handleSize * 0.15}px rgba(0,0,0,0)`,
-        "border-right": `${handleSize * 0.15}px solid ${sliderLineColor}`,
+        border: `inset ${merged.handleSize * 0.15}px rgba(0,0,0,0)`,
+        "border-right": `${merged.handleSize * 0.15}px solid ${merged.sliderLineColor}`,
         height: "0px",
-        "margin-left": `-${handleSize * 0.25}px`, // for IE11
-        "margin-right": `${handleSize * 0.25}px`,
+        "margin-left": `-${merged.handleSize * 0.25}px`, // for IE11
+        "margin-right": `${merged.handleSize * 0.25}px`,
         width: "0px",
       },
       rightArrow: {
-        border: `inset ${handleSize * 0.15}px rgba(0,0,0,0)`,
-        "border-left": `${handleSize * 0.15}px solid ${sliderLineColor}`,
+        border: `inset ${merged.handleSize * 0.15}px rgba(0,0,0,0)`,
+        "border-left": `${merged.handleSize * 0.15}px solid ${merged.sliderLineColor}`,
         height: "0px",
-        "margin-right": `-${handleSize * 0.25}px`, // for IE11
+        "margin-right": `-${merged.handleSize * 0.25}px`, // for IE11
         width: "0px",
       },
       leftLabel: {
@@ -342,8 +342,8 @@ const SolidCompareImage: Component<IProps> = ({
 
   return (
     <>
-      {skeleton && (!rightImgLoaded() || !leftImgLoaded() )&& (
-        <div style={{ ...styles().container,height:"initial" }}>{skeleton}</div>
+      {merged.skeleton && (!rightImgLoaded() || !leftImgLoaded() )&& (
+        <div style={{ ...styles().container,height:"initial" }}>{merged.skeleton}</div>
       )}
 
       <div
@@ -356,24 +356,24 @@ const SolidCompareImage: Component<IProps> = ({
       >
         <img
           onLoad={() => setRightImgLoaded(true)}
-          alt={rightImageAlt}
+          alt={merged.rightImageAlt}
           data-testid="right-image"
           ref={rightImageRef}
-          src={rightImage}
+          src={merged.rightImage}
           style={styles().rightImage}
         />
         <img
           onLoad={() => setLeftImgLoaded(true)}
-          alt={leftImageAlt}
+          alt={merged.leftImageAlt}
           data-testid="left-image"
           ref={leftImageRef}
-          src={leftImage}
+          src={merged.leftImage}
           style={styles().leftImage}
         />
         <div style={styles().slider}>
           <div style={styles().line} />
-          {handle ? (
-            <div style={styles().handleCustom}>{handle}</div>
+          {merged.handle ? (
+            <div style={styles().handleCustom}>{merged.handle}</div>
           ) : (
             <div style={styles().handleDefault}>
               <div style={styles().leftArrow} />
@@ -383,14 +383,14 @@ const SolidCompareImage: Component<IProps> = ({
           <div style={styles().line} />
         </div>
         {/* labels */}
-        {leftImageLabel && (
+        {merged.leftImageLabel && (
           <div style={styles().leftLabelContainer}>
-            <div style={styles().leftLabel}>{leftImageLabel}</div>
+            <div style={styles().leftLabel}>{merged.leftImageLabel}</div>
           </div>
         )}
-        {rightImageLabel && (
+        {merged.rightImageLabel && (
           <div style={styles().rightLabelContainer}>
-            <div style={styles().rightLabel}>{rightImageLabel}</div>
+            <div style={styles().rightLabel}>{merged.rightImageLabel}</div>
           </div>
         )}
       </div>
