@@ -1,0 +1,70 @@
+.container {
+  box-sizing: border-box;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.image {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  width: 100%;
+}
+
+.slider {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+}
+
+.line {
+  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
+    0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+  flex: 0 1 auto;
+}
+
+.handleCustom {
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  flex: 1 0 auto;
+  height: auto;
+  justify-content: center;
+  width: auto;
+}
+
+.handleDefault {
+  align-items: center;
+  border-radius: 100%;
+  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
+    0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+  box-sizing: border-box;
+  display: flex;
+  flex: 1 0 auto;
+  justify-content: center;
+}
+
+.opacity{
+        opacity: 0;
+}
+
+.arrow{
+        height: 0px;
+        width: 0px;
+}
+
+.label{
+        background: rgba(0, 0, 0, 0.5);
+        color: white;
+        padding: 10px 20px;
+        position: absolute;
+        transition: opacity 0.1s ease-out; 
+}
+.labelContainer{
+        height: 100%;
+        position: absolute;
+        width: 100%; 
+}
