@@ -10,6 +10,7 @@ import {
 } from "solid-js";
 import { IProps } from "./types";
 import stylesCss from "./styles.module.css";
+import { createResizeObserver } from "@solid-primitives/resize-observer";
 const SolidCompareImage: Component<IProps> = (props) => {
   const merged = mergeProps(
     {
@@ -50,18 +51,11 @@ const SolidCompareImage: Component<IProps> = (props) => {
   let leftImageRef: HTMLImageElement | undefined;
 
   onMount(() => {
-    if (!containerRef) {
-      return;
-    }
-    const resizeObserver = new ResizeObserver(([entry, ..._]) => {
-      const currentContainerWidth = entry.target.getBoundingClientRect().width;
-      setContainerWidth(currentContainerWidth);
+    createResizeObserver(containerRef, ({ width }) => {
+      console.log(width)
+      setContainerWidth(width);
     });
-    resizeObserver.observe(containerRef);
-
-    return () => resizeObserver.disconnect();
   });
-
   const handleSliding = (event: TouchEvent | MouseEvent) => {
     if (!rightImageRef) {
       return;
@@ -122,7 +116,7 @@ const SolidCompareImage: Component<IProps> = (props) => {
       handleSliding(e);
 
       window.addEventListener("mousemove", handleSliding); // 07
-      window.addEventListener("touchmove", handleSliding); // 08
+      window.addEventListener("touchmove", handleSliding,{passive:false}); // 08
     };
 
     const finishSliding = () => {
@@ -141,8 +135,8 @@ const SolidCompareImage: Component<IProps> = (props) => {
       // it's necessary to reset event handlers each time the canvasWidth changes
 
       // for mobile
-      containerRef.addEventListener("touchstart", startSliding); // 01
-      window.addEventListener("touchend", finishSliding); // 02
+      containerRef.addEventListener("touchstart", startSliding,{passive:false}); // 01
+      window.addEventListener("touchend", finishSliding,{passive:false}); // 02
 
       // for desktop
       if (merged.hover) {
