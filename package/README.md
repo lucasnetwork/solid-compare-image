@@ -41,7 +41,7 @@ export default App;
 
 | Name | Values/Type | Required | Default | Description |
 | ---- | ----------- | -------- | ------- | ----------- |
-| `aspectRatio` | `"taller" \| "wider"` | **No** | `"taller"` | Which to choose if the aspect ratios of the images are different |
+| `aspectRatio` | `string` | **No** | `"taller"` | Which to choose if the aspect ratios of the images are different. This prop can receive values taller and wider or custom aspect ratio like 16:9 1:1 4:3 etc. To custom aspect ratio, you must use the colon (:) to separate the width and height |
 | `handle` | `Element` | No | `-` | Custom element |
 | `handleSize` | `number` | No | `40` | Diameter of handle  |
 | `hover` | `boolean` | No | `40` | Whether to slide at hover |
