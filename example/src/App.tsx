@@ -1,7 +1,7 @@
 import type { Component } from 'solid-js';
 
 import styles from './App.module.css';
-import SolidCompareImage from "../../package/src/index"
+import SolidCompareImage from "../../package/dist/index"
 import leftImage from "./assets/imgs/leftImage.jpg"
 import rightImage from "./assets/imgs/rightImage.jpg"
 const App: Component = () => {
@@ -9,7 +9,7 @@ const App: Component = () => {
     <div class={styles.App}>
       <div>
 
-    <SolidCompareImage leftImage={leftImage}  rightImage={rightImage}/>
+      <SolidCompareImage aspectRatio='16:9' leftImage={leftImage}  rightImage={rightImage}/>
       </div>
     </div>
   );
