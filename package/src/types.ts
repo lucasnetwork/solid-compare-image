@@ -3,8 +3,11 @@ import { JSX } from "solid-js";
 export interface IProps {
   /**
    * Which to choose if the aspect ratios of the images are different
+   * This prop can receive values taller and wider or custom aspect ratio like 16:9 1:1 4:3 etc
+   * To custom aspect ratio, you must use the colon (:) to separate the width and height
+   * @default "taller"
    */
-  aspectRatio?: "taller" | "wider";
+  aspectRatio?: string;
   /**
    * Custom element
    */

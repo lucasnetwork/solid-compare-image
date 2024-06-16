@@ -52,7 +52,6 @@ const SolidCompareImage: Component<IProps> = (props) => {
 
   onMount(() => {
     createResizeObserver(containerRef, ({ width }) => {
-      console.log(width)
       setContainerWidth(width);
     });
   });
@@ -148,11 +147,20 @@ const SolidCompareImage: Component<IProps> = (props) => {
       }
 
       // calc and set the container's size
-      const leftImageWidthHeightRatio =
-        leftImageRef.naturalHeight / leftImageRef.naturalWidth;
-      const rightImageWidthHeightRatio =
-        rightImageRef.naturalHeight / rightImageRef.naturalWidth;
 
+      if(typeof merged.aspectRatio === "string" && merged.aspectRatio.includes(":")){
+        const [width, height] = merged.aspectRatio.split(":").map(Number);
+        if(!width || !height) throw new Error("Invalid aspect ratio")
+        const idealContainerHeight = containerWidth() * (height / width);
+        setContainerHeight(idealContainerHeight);
+        return
+      }
+
+      const leftImageWidthHeightRatio =
+      leftImageRef.naturalHeight / leftImageRef.naturalWidth;
+      const rightImageWidthHeightRatio =
+      rightImageRef.naturalHeight / rightImageRef.naturalWidth;
+     
       const idealWidthHeightRatio =
         merged.aspectRatio === "taller"
           ? Math.max(leftImageWidthHeightRatio, rightImageWidthHeightRatio)
